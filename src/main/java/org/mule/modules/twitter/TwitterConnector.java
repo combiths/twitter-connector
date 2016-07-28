@@ -67,6 +67,7 @@ public class TwitterConnector {
      * @param unit       The unit of measurement of the given radius. Can be 'mi' or 'km'. Miles by default.
      * @param until      If specified, returns tweets with generated before the given date. Date should be formatted as YYYY-MM-DD
      * @param resultType If specified, returns tweets included popular or real time or both in the responce. Both by default. Can be 'mixed', 'popular' or 'recent'.
+     * @param count		 Sets the page size of the query results.
      * @return the {@link QueryResult}
      * @throws TwitterException when Twitter service or network is unavailable
      */
@@ -81,7 +82,8 @@ public class TwitterConnector {
                               @Optional String radius,
                               @Default(value = Query.MILES) String unit,
                               @Optional String until,
-                              @Optional String resultType) throws TwitterException {
+                              @Optional String resultType,
+                              @Optional Integer count) throws TwitterException {
         final Query q = new Query(query);
 
         if (lang != null) {
@@ -111,6 +113,9 @@ public class TwitterConnector {
         }
         if (resultType != null) {
             q.setResultType(resultType);
+        }
+        if (count != null){
+        	q.setCount(count);
         }
         return twitter.search(q);
     }
